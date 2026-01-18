@@ -1,8 +1,9 @@
+// components/adminFilter.jsx
 'use client'
 import React, { useState, useEffect } from 'react';
-import styles from './filter.module.css';
 import { getFilterOptions } from '@/services/geoserver';
 
+import styles from './filter.module.css';
 
 const AdminFilter = ({ onFilterChange }) => {
     const [regions, setRegions] = useState([]);
@@ -12,43 +13,55 @@ const AdminFilter = ({ onFilterChange }) => {
     const [selectedRegion, setSelectedRegion] = useState("");
     const [selectedDept, setSelectedDept] = useState("");
 
-    // 1. Au chargement, on récupère les régions
     useEffect(() => {
         getFilterOptions("region").then(setRegions);
     }, []);
 
-    // 2. Quand la région change, on charge les départements
-    useEffect(() => {
-        if (selectedRegion) {
-            getFilterOptions("departement", selectedRegion).then(setDepts);
-            setCommunes([]); // On réinitialise les niveaux inférieurs
+    const handleRegionChange = (e) => {
+        const val = e.target.value;
+        setSelectedRegion(val);
+        setSelectedDept("");
+        setCommunes([]);
+        if (val) {
+            getFilterOptions("departement", val).then(setDepts);
+            onFilterChange({ type: 'region', value: val });
         }
-    }, [selectedRegion]);
+    };
 
-    // 3. Quand le département change, on charge les communes
-    useEffect(() => {
-        if (selectedDept) {
-            getFilterOptions("commune", selectedDept).then(setCommunes);
+    const handleDeptChange = (e) => {
+        const val = e.target.value;
+        setSelectedDept(val);
+        if (val) {
+            getFilterOptions("commune", val).then(setCommunes);
+            onFilterChange({ type: 'departement', value: val });
         }
-    }, [selectedDept]);
+    };
 
-return (
-    <div className={styles.adminPanel}>
-        <select onChange={(e) => setSelectedRegion(e.target.value)}>
-            <option>Région</option>
-            {regions.map(r => <option key={r} value={r}>{r}</option>)}
-        </select>
+    const handleCommuneChange = (e) => {
+        const val = e.target.value;
+        if (val) {
+            onFilterChange({ type: 'commune', value: val });
+        }
+    };
 
-        <select disabled={!depts.length} onChange={(e) => setSelectedDept(e.target.value)}>
-            <option>Département</option>
-            {depts.map(d => <option key={d} value={d}>{d}</option>)}
-        </select>
+    return (
+        <div className={styles.adminPanel}>
+            <select onChange={handleRegionChange} className={styles.toggleAdminBtn}>
+                <option value="">Région</option>
+                {regions.map(r => <option key={r} value={r}>{r}</option>)}
+            </select>
 
-        <select disabled={!communes.length}>
-            <option>Commune</option>
-            {communes.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-    </div>
-);
-}
+            <select disabled={!depts.length} onChange={handleDeptChange} className={styles.toggleAdminBtn}>
+                <option value="">Département</option>
+                {depts.map(d => <option key={d} value={d}>{d}</option>)}
+            </select>
+
+            <select disabled={!communes.length} onChange={handleCommuneChange} className={styles.toggleAdminBtn}>
+                <option value="">Commune</option>
+                {communes.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+        </div>
+    );
+};
+
 export default AdminFilter;

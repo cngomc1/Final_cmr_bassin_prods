@@ -20,16 +20,17 @@ const MapPage = () => {
         <div className={styles.mapWrap}>  
             {/* 1. FILTRES FILIÈRES */}
             <div className={styles.filiereBar}>
-                <button className={styles.filiereBtn} onClick={() => setActiveFiliere('agriculture')}>
+                <button className={styles.filiereBtn} onClick={() => setActiveFiliere('Agriculture')}>
                     🌾 Agriculture
                 </button>
-                <button className={styles.filiereBtn} onClick={() => setActiveFiliere('peche')}>
+                <button className={styles.filiereBtn} onClick={() => setActiveFiliere('Pêche')}>
                     🐟 Pêche
                 </button>
-                <button className={styles.filiereBtn} onClick={() => setActiveFiliere('elevage')}>
+                <button className={styles.filiereBtn} onClick={() => setActiveFiliere('Elevage')}>
                     🐄 Élevage
                 </button>
             </div>
+            
 
             {/* 2. BOUTON ADMIN */}
             <button className={styles.toggleAdminBtn} onClick={() => setIsAdminOpen(!isAdminOpen)}>
@@ -49,9 +50,9 @@ const MapPage = () => {
                 activeFiliere={activeFiliere} 
             />
 
-            <div className={styles.legend}>
+            {/* <div className={styles.legend}>
                 <small>Production du Cameroun</small>
-            </div>
+            </div> */}
         </div>
     );
 };

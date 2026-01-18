@@ -37,10 +37,12 @@
 /* Panneau administratif flottant à gauche */
 .adminPanel {
   position: absolute;
-  top: 80px;
+  top: 60px;
   left: 20px;
   z-index: 1000;
-  width: 250px;
+  display: flex;
+  gap: 10px;
+  width: fit-content;
   background: white;
   padding: 20px;
   border-radius: 12px;
@@ -49,7 +51,7 @@
 
 /* Bouton pour ouvrir/fermer le panneau admin */
 .toggleAdminBtn {
-  position: absolute;
+  /* position: absolute; */
   top: 20px;
   left: 20px;
   z-index: 1000;

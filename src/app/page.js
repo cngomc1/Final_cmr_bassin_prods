@@ -12,7 +12,6 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <MapPage />
-      <Stats/>
     </main>
   )
 }

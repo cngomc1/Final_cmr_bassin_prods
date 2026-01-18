@@ -9,7 +9,7 @@ import { GeocodingControl } from "@maptiler/geocoding-control/leaflet";
 import "@maptiler/geocoding-control/style.css";
 
 // Importation de ton service GeoServer
-import { fetchProductionGeoJSON } from '@/services/geoserver';
+import { fetchProductionGeoJSON, fetchZoneGeoJSON } from '@/services/geoserver';
 
 const Map = ({ currentSelection, activeFiliere }) => {
     // Références pour manipuler la carte et les couches sans déclencher de re-renders inutiles
@@ -55,41 +55,104 @@ const Map = ({ currentSelection, activeFiliere }) => {
 
     // Réagir aux changements de Sélection Admin (Région, Dept)
     useEffect(() => {
-        if (currentSelection) {
-            fetchProductionGeoJSON(currentSelection.type, currentSelection.value).then(displayGeoData);
+    if (!currentSelection || !map.current) return;
+
+    const { type, value } = currentSelection;
+    console.log(`PROUVE : La Map a reçu le filtre ${type} avec la valeur : ${value}`);
+
+    const updateAdminDisplay = async () => {
+        try {
+            // 1. Appel au traducteur geoserver.js
+            const geojson = await fetchZoneGeoJSON(type, value);
+            
+            if (geojson.features.length === 0) {
+                console.warn("GeoServer n'a trouvé aucun polygone pour cette sélection.");
+                return;
+            }
+
+            // 2. Affichage et Zoom
+            displayGeoData(geojson);
+
+        } catch (error) {
+            console.error("Erreur de communication avec GeoServer :", error);
         }
-    }, [currentSelection]);
+    };
+
+    updateAdminDisplay();
+}, [currentSelection]); 
     // --- 3. FONCTIONS UTILITAIRES ---
 
     // Fonction centrale pour afficher les données GeoJSON et zoomer
-    const displayGeoData = (geojson) => {
-        if (!map.current) return;
+    // map.js - Extrait de la fonction displayGeoData
 
-        // On retire la couche précédente si elle existe
-        if (currentLayer.current) {
-            map.current.removeLayer(currentLayer.current);
-        }
+const displayGeoData = (geojson) => {
+    if (!map.current) return;
 
-        // On crée la nouvelle couche
-        currentLayer.current = L.geoJSON(geojson, {
-            style: {
-                color: "#2e7d32",
-                weight: 2,
-                fillOpacity: 0.4,
-                fillColor: "#4caf50"
-            },
-            onEachFeature: (feature, layer) => {
-                const name = feature.properties.nom || feature.properties.arrondissement || "Zone";
-                layer.bindPopup(`<b>${name}</b>`);
-            }
-        }).addTo(map.current);
+    if (currentLayer.current) {
+        map.current.removeLayer(currentLayer.current);
+    }
 
-        // Focus automatique (FlyTo) sur la zone chargée
-        const bounds = currentLayer.current.getBounds();
-        if (bounds.isValid()) {
-            map.current.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
+    // Définition des couleurs par filière
+    const getFiliereColor = (filiere) => {
+        switch (filiere?.toLowerCase()) {
+            case 'agriculture': return "#2e7d32"; // Vert
+            case 'pêche': return "#0288d1";      // Bleu
+            case 'elevage': return "#f57c00";    // Orange
+            default: return "gray";
         }
     };
+
+    currentLayer.current = L.geoJSON(geojson, {
+        style: (feature) => ({
+            color: getFiliereColor(feature.properties.filiere),
+            weight: 2,
+            fillOpacity: 0.5,
+            fillColor: getFiliereColor(feature.properties.filiere)
+        }),
+        onEachFeature: (feature, layer) => {
+            const p = feature.properties;
+            
+            // Construction d'un popup élégant en HTML
+            const popupContent = `
+                <div class="${styles.popupContainer}">
+                    <header class="${styles.popupHeader}">
+                        <strong>${p.adm3_name1 || p.nom || 'Zone'}</strong>
+                        <small>${p.adm1_name1 || ''}</small>
+                    </header>
+                    <div class="${styles.popupBody}">
+                        <p><strong>Produit:</strong> ${p.produit || 'N/A'}</p>
+                        <p><strong>Production:</strong> <span class={styles.tonnage}>${p.quantite || 0}</span> Tonnes</p>
+                        <p><strong>Année:</strong> ${p.annee || '2024'}</p>
+                    </div>
+                    <footer class="${styles.popupFooter}">
+                        Filière: ${p.filiere || 'Générale'}
+                    </footer>
+                </div>
+            `;
+            
+            layer.bindPopup(popupContent, {
+                className: styles.customPopup // Pour styliser davantage en CSS
+            });
+
+            // Effet au survol
+            layer.on({
+                mouseover: (e) => {
+                    const l = e.target;
+                    l.setStyle({ fillOpacity: 0.8, weight: 3 });
+                },
+                mouseout: (e) => {
+                    const l = e.target;
+                    l.setStyle({ fillOpacity: 0.5, weight: 2 });
+                }
+            });
+        }
+    }).addTo(map.current);
+
+    const bounds = currentLayer.current.getBounds();
+    if (bounds.isValid()) {
+        map.current.flyToBounds(bounds, { padding: [50, 50], duration: 1.5 });
+    }
+};
 
  
 

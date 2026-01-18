@@ -5,7 +5,7 @@ const GEOSERVER_WFS_LAYER = process.env.NEXT_PUBLIC_GEOSERVER_WFS_LAYER ;
 export const fetchProductionGeoJSON = async (filiere, region = null, product = null) => {
     let cqlFilter = `filiere='${filiere}'`;
     if (region) cqlFilter += ` AND region='${region}'`;
-    if (product) cqlFilter += ` AND product='${region}'`;
+    if (product) cqlFilter += ` AND product='${product}'`;
    
     const params = new URLSearchParams({
         service: 'WFS',
@@ -20,37 +20,62 @@ export const fetchProductionGeoJSON = async (filiere, region = null, product = n
     return await response.json();
 };
 
-// Fonction pour récupérer uniquement les noms (pour les filtres)
-export const getFilterOptions = async (level, parentName = null) => {
-    
-    // On construit le filtre selon le niveau
-    let cqlFilter = "";
-    let propertyName = "";
 
-    if (level === "region") {
-        propertyName = "region"; // On veut la liste des régions
-    } else if (level === "departement") {
-        propertyName = "departement";
-        cqlFilter = `region='${parentName}'`; // Uniquement ceux de la région X
+
+const COLUMN_MAPPING = {
+    region: "adm1_name1",
+    departement: "adm2_name1",
+    commune: "adm3_name1",
+    filiere: "filiere"
+};
+
+export const getFilterOptions = async (level, parentName = null) => {
+    const propertyName = COLUMN_MAPPING[level];
+    let cqlFilter = "";
+
+    if (level === "departement") {
+        cqlFilter = `${COLUMN_MAPPING.region}='${parentName}'`;
     } else if (level === "commune") {
-        propertyName = "arrondissement";
-        cqlFilter = `departement='${parentName}'`;
+        cqlFilter = `${COLUMN_MAPPING.departement}='${parentName}'`;
     }
 
     const params = new URLSearchParams({
         service: 'WFS',
         version: '1.0.0',
         request: 'GetFeature',
-        typeName: 'sig:admin_layers',
+        typeName: GEOSERVER_WFS_LAYER,
         outputFormat: 'application/json',
-        propertyName: propertyName, // CRUCIAL : on ne demande que le nom, pas la carte !
+        propertyName: propertyName,
         ...(cqlFilter && { CQL_FILTER: cqlFilter })
     });
 
     const response = await fetch(`${GEOSERVER_WFS_URL}?${params.toString()}`);
     const data = await response.json();
-    
-    // On nettoie les doublons (GeoServer renvoie une feature par polygone)
     const list = data.features.map(f => f.properties[propertyName]);
-    return [...new Set(list)].sort(); 
+    return [...new Set(list)].sort();
+};
+
+export const fetchZoneGeoJSON = async (level, value = null) => {
+    let cqlFilter = "";
+
+    // Si value est présent, c'est un filtre Admin (region, departement, commune)
+    if (value) {
+        const columnName = COLUMN_MAPPING[level];
+        cqlFilter = `${columnName}='${value}'`;
+    } else {
+        // Sinon c'est une filière (le premier paramètre est alors 'Agriculture', etc.)
+        cqlFilter = `${COLUMN_MAPPING.filiere}='${level}'`;
+    }
+
+    const params = new URLSearchParams({
+        service: 'WFS',
+        version: '1.0.0',
+        request: 'GetFeature',
+        typeName: GEOSERVER_WFS_LAYER,
+        outputFormat: 'application/json',
+        CQL_FILTER: cqlFilter
+    });
+
+    const response = await fetch(`${GEOSERVER_WFS_URL}?${params.toString()}`);
+    return await response.json();
 };
