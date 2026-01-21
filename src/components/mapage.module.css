@@ -1,0 +1,155 @@
+/* map.module.css */
+
+.mapWrap {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- FILIERE BAR (TOP) --- */
+.filiereBar {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 6px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.filiereBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 40px;
+    border: none;
+    background: transparent;
+    color: #4b5563;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filiereBtn.active {
+    background: #004d40;
+    color: white;
+}
+
+.filiereBtn:hover:not(.active) {
+    background: #f3f4f6;
+}
+
+/* --- TOGGLE ADMIN BTN --- */
+.toggleAdminBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* --- ADMIN PANEL --- */
+.adminPanelContainer {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    z-index: 1100;
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    padding: 15px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVE LOGIC (MOBILE) --- */
+
+@media (max-width: 768px) {
+    /* On cache le texte des boutons pour gagner de la place */
+    .btnLabel {
+        display: none;
+    }
+
+    .filiereBar {
+        width: auto;
+        padding: 4px;
+        top: 10px;
+    }
+
+    .filiereBtn {
+        padding: 10px; /* Boutons carrés pour les icônes */
+    }
+
+    .toggleAdminBtn {
+        top: auto;
+        bottom: 20px; /* Sur mobile, le bouton admin passe en bas pour le pouce */
+        left: 20px;
+        padding: 15px;
+        border-radius: 50%; /* Devient un bouton rond (FAB) */
+    }
+
+    .adminPanelContainer {
+        width: calc(100% - 40px); /* Prend presque toute la largeur */
+        left: 20px;
+        bottom: 85px; /* S'ouvre au dessus du bouton toggle */
+        top: auto;
+    }
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f9fafb;
+    color: #004d40;
+}
+
+@media (max-width: 768px) {
+    /* Sur mobile, la barre de recherche prend souvent toute la largeur */
+    .filiereBar {
+        top: 60px; 
+        right: 10px;
+        flex-direction: row; /* On repasse en horizontal pour ne pas cacher toute la carte */
+        max-width: calc(100vw - 10px);
+        /* width: 100%; */
+        overflow-x: auto; /* Scroll horizontal si trop d'icônes */
+        padding-bottom: 5px;
+    }
+
+    .btnLabel {
+        display: none; /* Ne garde que les icônes sur mobile */
+    }
+
+    .filiereBtn {
+        padding: 12px;
+        border-radius: 50%; /* Boutons ronds sur mobile */
+    }
+
+    .adminPanelContainer {
+        width: calc(100% - 40px);
+        left: 10px;
+    }
+}

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
 import "leaflet/dist/leaflet.css";
@@ -121,7 +121,7 @@ const displayGeoData = (geojson) => {
                     </header>
                     <div class="${styles.popupBody}">
                         <p><strong>Produit:</strong> ${p.produit || 'N/A'}</p>
-                        <p><strong>Production:</strong> <span class={styles.tonnage}>${p.quantite || 0}</span> Tonnes</p>
+                        <p><strong>Production:</strong> <span class={styles.tonnage}>${p.tonnage || 0}</span> Tonnes</p>
                         <p><strong>Année:</strong> ${p.annee || '2024'}</p>
                     </div>
                     <footer class="${styles.popupFooter}">

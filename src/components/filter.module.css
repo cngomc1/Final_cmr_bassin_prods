@@ -12,7 +12,7 @@
 
 /* Barre des filières (Agriculture, Pêche...) en haut */
 .filiereBar {
-  position: absolute;
+  /* position: absolute; */
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
@@ -35,18 +35,26 @@
 }
 
 /* Panneau administratif flottant à gauche */
-.adminPanel {
+.filterContainer {
   position: absolute;
   top: 60px;
   left: 20px;
   z-index: 1000;
-  display: flex;
-  gap: 10px;
   width: fit-content;
   background: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+} 
+
+.adminPanel {
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  gap: 10px;
+  width: fit-content;
+  background: white;
+  border-radius: 12px;
 }
 
 /* Bouton pour ouvrir/fermer le panneau admin */
