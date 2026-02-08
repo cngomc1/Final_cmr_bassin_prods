@@ -1,6 +1,5 @@
 import Navbar from '@/components/navbar';
 import Sidebar from '../../components/sidebar/sidebar';
-import './globals.css';
 import styles from './layout.module.css';
 import { FilterProvider } from "@/context/FilterContext";
 
