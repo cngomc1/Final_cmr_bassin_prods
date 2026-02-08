@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { mapService } from '../../services/mapService';
+import { mapService } from '@/services/mapService';
 import styles from '../page.module.css';
 import { useFilters } from '@/context/FilterContext';
-import Pancarte from '../../components/map/pancarte';
+import Pancarte from '@/components/map/pancarte';
 import { toast } from 'react-hot-toast';
 
 const Map = dynamic(() => import('../../components/map/map'), { ssr: false });
