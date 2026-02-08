@@ -26,8 +26,7 @@ npm install
 Créez un fichier `.env.local` à la racine du projet et ajoutez votre clé MapTiler :
 ```env
 NEXT_PUBLIC_MAPTILER_KEY=VOTRE_CLE_ICI
-NEXT_PUBLIC_GEOSERVER_WFS_URL="/geoserver-api/ows"
-NEXT_PUBLIC_GEOSERVER_WFS_LAYER="cameroun:cmr_admin3"
+NEXT_PUBLIC_API_URL = 'http://localhost:5000'
 ```
 
 ---
@@ -37,13 +36,13 @@ NEXT_PUBLIC_GEOSERVER_WFS_LAYER="cameroun:cmr_admin3"
 Pour que l'application puisse afficher les données, vous devez suivre scrupuleusement ces étapes de configuration.
 
 ### Étape 1 : PostGIS (La Base de Données)
-1.  Créez une base de données nommée : `cmr_prods`.
+1.  Créez une base de données nommée : `bassins_productions`.
 2.  Activez PostGIS dans l'outil de requête (Query Tool) :
     ```sql
     CREATE EXTENSION postgis;
     ```
-3.  Importez la couche géographique jointe fournie (fichier `.shp` ou `.gpkg`) dans cette base. La table résultante doit s'appeler : `cmr_admin3`.
-
+3.  Créez une table `productions` et importez le fichier CSV fournie (fichier `.csv` ) dans cette table. La table résultante doit s'appeler : `productions`.
+<!-- 
 ### Étape 2 : GeoServer (Le Serveur Cartographique)
 Configurez GeoServer via son interface web (`localhost:8080/geoserver`) :
 1.  **Workspace :** Créez un espace de travail nommé `cameroun`.
@@ -63,7 +62,7 @@ Une fois GeoServer lancé et l'application démarrée, nous avons mis à disposi
 2.  Ouvrez votre navigateur sur : **[http://localhost:3000/TUTORIEL_CONFIG.html](http://localhost:3000/TUTORIEL_CONFIG.html)**
 3.  Cliquez sur le bouton **"Vérifier la connexion"** en bas de page.
 
----
+--- -->
 
 ## 📂 Structure du Projet
 *   `/app` : Pages de l'application (Carte et Statistiques).

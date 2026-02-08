@@ -10,7 +10,7 @@ export default function RedirectPage() {
     useEffect(() => {
         // On laisse 2.5 secondes pour l'animation avant de rediriger
         const timer = setTimeout(() => {
-            router.push('/dashboard'); // Remplace par ta route
+            router.push('/carte'); // Remplace par ta route
         }, 2500);
 
         return () => clearTimeout(timer);
@@ -32,8 +32,8 @@ export default function RedirectPage() {
                 </div>
 
                 {/* NOM ET SLOGAN */}
-                <h1 className={styles.appName}>AgriStat <span className={styles.highlight}>CMR</span></h1>
-                <p className={styles.slogan}>La data au service de votre productivité</p>
+                <h1 className={styles.appName}> <span className={styles.highlight}>CMR BASSIN PROD</span></h1>
+                <p className={styles.slogan}>Où on localise les bassins de production du Cameroun</p>
 
                 {/* ANIMATION TROIS POINTS */}
                 <div className={styles.loader}>
