@@ -7,7 +7,7 @@ import { useFilters } from '@/context/FilterContext';
 import Pancarte from '@/components/map/pancarte';
 import { toast } from 'react-hot-toast';
 
-const Map = dynamic(() => import('../../components/map/map'), { ssr: false });
+const Map = dynamic(() => import('@/components/map/map'), { ssr: false });
 
 export default function CartePage() {
   const { filters } = useFilters();
