@@ -1,0 +1,63 @@
+.layoutContainer {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #f8fafc;
+}
+
+.mainContent {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0; 
+  transition: margin-left 0.3s ease;
+}
+
+.pageScroll {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Scrollbar personnalisée pour WebKit */
+.pageScroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pageScroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.pageScroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.pageScroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+@media (max-width: 768px) {
+  .layoutContainer {
+    flex-direction: column;
+  }
+
+  .mainContent {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .pageScroll {
+    /* padding: 1rem; */
+    /* Ajustement pour la hauteur mobile si sidebar en haut */
+    min-height: calc(100vh - 60px);
+  }
+}
+

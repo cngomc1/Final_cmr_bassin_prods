@@ -1,6 +1,6 @@
 'use client';
 import styles from '../page.module.css';
-import Stats from '@/components/stats';
+import Stats from '@/components/stats/stats';
 
 
 export default function Statistics() {

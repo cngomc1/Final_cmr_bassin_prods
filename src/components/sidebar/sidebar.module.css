@@ -1,0 +1,86 @@
+/* Sidebar container */
+.sidebar {
+  width: 280px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.25);
+  overflow: auto;
+}
+
+/* Logo / Title */
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #38bdf8;
+  margin-bottom: 36px;
+  text-align: left;
+}
+
+/* Navigation container */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Menu item wrapper */
+.menuItem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Navigation links */
+.menuItem a {
+  text-decoration: none;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.menuItem a:hover {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+/* Active link */
+.active {
+  background-color: #38bdf8;
+  color: #020617 !important;
+  font-weight: 600;
+}
+
+/* Sub-filters container (visible only on /carte) */
+.subFilters {
+  margin-left: 8px;
+  padding: 12px 14px;
+  background-color: rgba(15, 23, 42, 0.9);
+  border-left: 3px solid #38bdf8;
+  border-radius: 6px;
+}
+
+/* Optional: smoother separation */
+.subFilters::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #1e293b;
+  margin-bottom: 10px;
+}
+
+/* Responsive (tablet & below) */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+
+}

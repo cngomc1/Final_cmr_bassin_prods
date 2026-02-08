@@ -1,0 +1,207 @@
+.pancarteContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    /* Animation initiale : décalé de 100% vers la droite */
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.visible {
+    transform: translateX(0);
+}
+
+.header {
+    padding: 25px 20px;
+    background: #0f172a;
+    color: white;
+    position: relative;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.closeBtn:hover {
+    color: white;
+}
+
+.cityName {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.filiereBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 25px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+/* Grille des rangs */
+.rankGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.rankItem {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #e2e8f0;
+}
+
+.highlight {
+    background: #eff6ff;
+    border-color: #3b82f6;
+}
+
+.rankLabel {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.rankValue {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.highlight .rankValue {
+    color: #3b82f6;
+}
+
+/* Stats Card */
+.statsCard {
+    background: #0f172a;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+}
+
+.totalRow {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.bigNumber {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.unit {
+    color: #94a3b8;
+}
+
+.contribution {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.contribution strong {
+    color: #22c55e;
+}
+
+/* Liste des produits */
+.productItem {
+    margin-bottom: 15px;
+}
+
+.productInfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.productTonnage {
+    color: #64748b;
+}
+
+.progressBar {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 3px;
+}
+
+.footer {
+    padding: 15px 20px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-align: center;
+}

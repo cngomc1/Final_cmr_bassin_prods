@@ -4,15 +4,19 @@
   font-family: 'Geist', sans-serif;
 }
 
+
 .button {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 1000;
-  padding: 10px 15px;
   background-color: white;
   border: none;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
   cursor: pointer;
+}
+
+.searchBar{
+  display: none;
 }
