@@ -1,0 +1,102 @@
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
+
+.content {
+    text-align: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Animation du Logo avec Halo */
+.logoWrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.logoHalo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.logo {
+    position: relative;
+    z-index: 1;
+}
+
+/* Typographie */
+.appName {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.highlight {
+    color: #38bdf8;
+}
+
+.slogan {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+/* Loader à trois points */
+.loader {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 30px 0 15px 0;
+}
+
+.loader span {
+    width: 12px;
+    height: 12px;
+    background-color: #38bdf8;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loader span:nth-child(1) { animation-delay: -0.32s; }
+.loader span:nth-child(2) { animation-delay: -0.16s; }
+
+.redirectText {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* Animations Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+}
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
