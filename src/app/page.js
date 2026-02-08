@@ -42,7 +42,7 @@ export default function RedirectPage() {
                     <span></span>
                 </div>
                 
-                <p className={styles.redirectText}>Préparation de votre espace...</p>
+                <p className={styles.redirectText}>Préparation de la carte...</p>
             </div>
         </div>
     );
